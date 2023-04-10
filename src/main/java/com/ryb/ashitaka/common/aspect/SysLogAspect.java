@@ -21,6 +21,9 @@ import java.util.Arrays;
 @Aspect
 @Component
 @Slf4j
+/**
+ * https://blog.csdn.net/qq_44392492/article/details/117234382
+ */
 public class SysLogAspect {
 	@Resource
 	private SysLogService sysLogService;
