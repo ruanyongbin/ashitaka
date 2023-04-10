@@ -1,6 +1,8 @@
 package com.ryb.ashitaka.common.util;
 
+import cn.hutool.core.net.Ipv4Util;
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.extra.servlet.ServletUtil;
 import com.google.common.collect.Maps;
 import okhttp3.*;
 import okhttp3.logging.HttpLoggingInterceptor;
@@ -41,7 +43,6 @@ public final class HttpUtils {
      * @throws Exception
      */
     public static String doGet(String url, Map<String, Object> query) throws Exception {
-
         return doGet(url, Maps.newHashMap(), query);
     }
 

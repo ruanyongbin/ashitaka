@@ -1,5 +1,6 @@
 package com.ryb.ashitaka.sys.controller;
 
+import com.ryb.ashitaka.common.annotation.SysLog;
 import com.ryb.ashitaka.common.base.Result;
 import com.ryb.ashitaka.common.util.ResultUtils;
 import com.ryb.ashitaka.sys.dto.SysUserLoginDTO;
@@ -21,12 +22,14 @@ public class SysUserController {
 
     @PostMapping("register")
     @ApiOperation("用户注册")
+    @SysLog(module = "sys模块",description = "用户注册")
     public Result<Boolean> register(@RequestBody @Valid SysUserRegisterDTO sysUserRegisterDTO) {
         return ResultUtils.success(userService.register(sysUserRegisterDTO));
     }
 
     @PostMapping("login")
     @ApiOperation("用户登录")
+    @SysLog(module = "sys模块",description = "用户登录")
     public Result<String> login(@RequestBody @Valid SysUserLoginDTO userLoginDTO) {
         return  ResultUtils.success(userService.login(userLoginDTO));
     }

@@ -12,7 +12,7 @@ import java.util.List;
 public class CodeGenerator {
     public static void main(String[] args) {
         List<String> tables = new ArrayList<>();
-        tables.add("test_student");
+        tables.add("sys_log");
 //        tables.add("p_question");
 //        tables.add("p_answer");
 //        tables.add("p_correct");
@@ -39,7 +39,7 @@ public class CodeGenerator {
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tables)
-                            .addTablePrefix("sys_")
+                            //.addTablePrefix("sys_")
                             .serviceBuilder()
                             .formatServiceFileName("%sService")
                             .formatServiceImplFileName("%sServiceImpl")

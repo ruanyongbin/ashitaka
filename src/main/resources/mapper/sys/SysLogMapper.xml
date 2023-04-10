@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ryb.ashitaka.sys.mapper.SysLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.ryb.ashitaka.sys.entity.SysLog">
+        <result column="id" property="id" />
+        <result column="create_time" property="createTime" />
+        <result column="modified_time" property="modifiedTime" />
+        <result column="version" property="version" />
+        <result column="is_deleted" property="deleted" />
+        <result column="operator" property="operator" />
+        <result column="execution_time" property="executionTime" />
+        <result column="method" property="method" />
+        <result column="request_type" property="requestType" />
+        <result column="param" property="param" />
+        <result column="result" property="result" />
+        <result column="ip" property="ip" />
+        <result column="description" property="description" />
+        <result column="module" property="module" />
+    </resultMap>
+
+</mapper>
