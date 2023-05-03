@@ -1,4 +1,4 @@
-package com.ryb.ashitaka.common.aspect;
+package com.ryb.ashitaka.sys.aspect;
 
 import cn.hutool.json.JSONUtil;
 import com.ryb.ashitaka.common.util.SecurityUtils;
@@ -10,11 +10,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -30,7 +28,7 @@ public class SysLogAspect {
 	
 	//定义切点 切点表达式指向SysLog注解，我们再业务方法上可以加上SysLog注解，然后所标注
 	//的方法都能进行日志记录
-	@Pointcut("@annotation(com.ryb.ashitaka.common.annotation.SysLog)")
+	@Pointcut("@annotation(com.ryb.ashitaka.sys.annotation.SysLog)")
 	public void logPointCut() { 
 		
 	}
@@ -44,7 +42,11 @@ public class SysLogAspect {
 		long executionTime = System.currentTimeMillis() - beginTime;
 
 		//保存日志
-		saveSysLog(point, executionTime, result);
+		try {
+			saveSysLog(point, executionTime, result);
+		}catch (Exception e) {
+			log.error(e.getMessage(),e);
+		}
 
 		return result;
 	}
@@ -54,7 +56,7 @@ public class SysLogAspect {
 		Method method = signature.getMethod();
 
 		SysLog sysLog = new SysLog();
-		com.ryb.ashitaka.common.annotation.SysLog  sysLogAnnotation = method.getAnnotation(com.ryb.ashitaka.common.annotation.SysLog.class);
+		com.ryb.ashitaka.sys.annotation.SysLog sysLogAnnotation = method.getAnnotation(com.ryb.ashitaka.sys.annotation.SysLog.class);
 		if(sysLogAnnotation != null){
 			//注解上的描述
 			sysLog.setDescription(sysLogAnnotation.description());
@@ -80,13 +82,15 @@ public class SysLogAspect {
 		sysLog.setResult(JSONUtil.toJsonStr(result));
 
 
-//		//获取request
+		//获取request
 //		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
-//		//设置IP地址
-//		sysLog.setIp(IPUtils.getIpAddr(request));
+		//设置IP地址
+		//sysLog.setIp(IPUtils.getIpAddr(request));
 
 		sysLog.setExecutionTime(executionTime);
 		//保存系统日志
 		sysLogService.save(sysLog);
 	}
+
+
 }

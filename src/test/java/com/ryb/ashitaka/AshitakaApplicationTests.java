@@ -1,25 +1,12 @@
 package com.ryb.ashitaka;
 
-import cn.hutool.jwt.JWT;
-import cn.hutool.jwt.JWTPayload;
-import cn.hutool.jwt.JWTUtil;
-import cn.hutool.jwt.JWTValidator;
-import cn.hutool.jwt.signers.JWTSignerUtil;
-import com.baomidou.dynamic.datasource.annotation.DSTransactional;
-import com.ryb.ashitaka.business.test.entity.TestStudent;
 import com.ryb.ashitaka.business.test.service.TestAsyncService;
 import com.ryb.ashitaka.business.test.service.TestStudentService;
-import com.ryb.ashitaka.common.util.HttpUtils;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @SpringBootTest
 class AshitakaApplicationTests {
@@ -48,9 +35,9 @@ class AshitakaApplicationTests {
 
 //        String s = HttpUtils.get("http://localhost:8080/get1");
 //        System.out.println(s);
-        String s = HttpUtils.doGet("http://www.baidu.com");
-//        HttpUtils.doPost()
-        System.out.println(s);
+//        String s = HttpUtils.doGet("http://www.baidu.com");
+////        HttpUtils.doPost()
+//        System.out.println(s);
     }
 
 
@@ -63,7 +50,7 @@ class AshitakaApplicationTests {
     }
 
     @Test
-    void testStudent() {
+    void testStudent() throws IOException {
 //        TestStudent student = new TestStudent();
 //        student.setName("zs");
 //        student.setAge(11);
@@ -79,6 +66,33 @@ class AshitakaApplicationTests {
 //        TestStudent student2 = testStudentService.getDS2(1L);
 //        System.out.println(student1);
 //        System.out.println(student2);
-        testStudentService.testTrans();
+        //testStudentService.testTrans();
+
+
+
+
+//        OkHttpClient client = new OkHttpClient().newBuilder()
+//                .build();
+//        Request request = new Request.Builder()
+//                .url("www.baidu.com")
+//                .method("GET", null)
+//                .addHeader("Cookie", "BAIDUID=8FA8E96A1C13614E1EFD0561B75C72C3:FG=1; BIDUPSID=8FA8E96A1C13614EA6AFA208E7C22DF6; H_PS_PSSID=38515_36545_38529_38470_38468_38375_38486_37929_38519_26350_38542; PSTM=1682671922; BDSVRTM=0; BD_HOME=1")
+//                .build();
+//        client.newCall(request).enqueue(new Callback() {
+//            @Override
+//            public void onFailure(Call call, IOException e) {
+//
+//            }
+//
+//            @Override
+//            public void onResponse(Call call, Response response) throws IOException {
+//                ResponseBody body = response.body();
+//
+//            }
+//        });
+//
+
+
+
     }
 }

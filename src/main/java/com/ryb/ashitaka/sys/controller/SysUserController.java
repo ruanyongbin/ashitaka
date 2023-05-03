@@ -1,14 +1,17 @@
 package com.ryb.ashitaka.sys.controller;
 
-import com.ryb.ashitaka.common.annotation.SysLog;
 import com.ryb.ashitaka.common.base.Result;
 import com.ryb.ashitaka.common.util.ResultUtils;
+import com.ryb.ashitaka.sys.annotation.SysLog;
 import com.ryb.ashitaka.sys.dto.SysUserLoginDTO;
 import com.ryb.ashitaka.sys.dto.SysUserRegisterDTO;
 import com.ryb.ashitaka.sys.service.SysUserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @Data
-@ConfigurationProperties(prefix = "thread.poolexecutor")
+@ConfigurationProperties(prefix = "executor.thread-pool")
 public class ThreadPoolProperties {
     private Integer corePoolSize;
     private Integer maxPoolSize;

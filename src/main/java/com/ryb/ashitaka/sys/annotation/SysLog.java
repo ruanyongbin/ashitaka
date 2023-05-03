@@ -1,4 +1,4 @@
-package com.ryb.ashitaka.common.annotation;
+package com.ryb.ashitaka.sys.annotation;
 
 import java.lang.annotation.*;
 

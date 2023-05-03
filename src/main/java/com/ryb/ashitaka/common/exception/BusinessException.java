@@ -9,7 +9,7 @@ import lombok.Getter;
 public class BusinessException extends RuntimeException{
 
     private static final long serialVersionUID = -5144654109852083553L;
-    private Integer code;
+    private final Integer code;
 
     public BusinessException(String message) {
         super(message);

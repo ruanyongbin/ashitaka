@@ -1,5 +1,6 @@
 package com.ryb.ashitaka.sys.filter;
 
+import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.JWTPayload;
 import com.ryb.ashitaka.common.util.JWTUtils;
 import com.ryb.ashitaka.sys.service.impl.SysUserServiceImpl;
@@ -20,16 +21,21 @@ import java.io.IOException;
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
+    public static final String TOKEN_PREFIX = "Bearer ";
+
+    public static final String HEADER_NAME = "Authorization";
+
     @Resource
     private SysUserServiceImpl userServiceImpl;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain) throws ServletException, IOException {
         // 从请求头中获取token字符串并解析（JwtManager之前文章有详解，这里不多说了）
-        JWTPayload payload = JWTUtils.parse(request.getHeader("Authorization"));
-        if (payload != null) {
+        String tokenWithPrefix = request.getHeader(HEADER_NAME);
+        if(StrUtil.isNotBlank(tokenWithPrefix)) {
             // 从`JWT`中提取出之前存储好的用户名
-            String username = payload.getClaim("username").toString();
+            String token = StrUtil.removePrefix(tokenWithPrefix, TOKEN_PREFIX);
+            String username = JWTUtils.getUsername(token);
             // 查询出用户对象
             UserDetails user = userServiceImpl.loadUserByUsername(username);
             // 手动组装一个认证对象
@@ -39,4 +45,5 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         }
         chain.doFilter(request, response);
     }
+
 }

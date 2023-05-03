@@ -1,7 +1,9 @@
 package com.ryb.ashitaka.common.util;
 
+import cn.hutool.core.util.ObjUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.jwt.*;
+import cn.hutool.jwt.signers.JWTSigner;
 import cn.hutool.jwt.signers.JWTSignerUtil;
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,32 +18,38 @@ public final class JWTUtils {
     /**
      * 这个秘钥是防止JWT被篡改的关键，随便写什么都好，但决不能泄露
      */
-    private final static String SECRET_KEY = "ashitaka";
+    public static final String  SECRET_KEY = "ashitaka";
     /**
      * 签发者
      */
-    private final static String ISSUER = "ashitaka";
+    public static final String  ISSUER = "ashitaka";
     /**
      * 过期时间目前设置成2天，这个配置随业务需求而定
     */
-    private final static Duration expiration = Duration.ofDays(2);
+    public static final Duration EXPIRATION = Duration.ofDays(2);
+
+
+    public static final String  PAYLOAD = "username";
+
+
+    public static final JWTSigner JWT_SIGNER = JWTSignerUtil.hs256(SECRET_KEY.getBytes());
 
     /**
      * 生成JWT
      *
-     * @param userName 用户名
+     * @param username 用户名
      * @return JWT
      */
-    public static String generate(String userName) {
+    public static String generate(String username) {
         Date issuedDate = new Date();
-        Date expiryDate = new Date(System.currentTimeMillis() + expiration.toMillis());
+        Date expiryDate = new Date(System.currentTimeMillis() + EXPIRATION.toMillis());
         Map<String,Object> payload = new HashMap<>();
-        payload.put("username",userName);
+        payload.put(PAYLOAD,username);
         payload.put(JWTPayload.NOT_BEFORE, issuedDate);
         payload.put(JWTPayload.ISSUED_AT, issuedDate);
         payload.put(JWTPayload.EXPIRES_AT, expiryDate);
         payload.put(JWTPayload.ISSUER, ISSUER);
-        return JWTUtil.createToken(payload, JWTSignerUtil.hs512(SECRET_KEY.getBytes()));
+        return JWTUtil.createToken(payload, JWT_SIGNER);
     }
 
 
@@ -49,7 +57,7 @@ public final class JWTUtils {
     public static Boolean verify(String token) {
         try {
             JWTValidator.of(token).validateDate();
-            return JWTUtil.verify(token, JWTSignerUtil.hs512(SECRET_KEY.getBytes()));
+            return JWTUtil.verify(token, JWT_SIGNER);
         }catch (Exception e) {
             log.error(e.getMessage(),e);
         }
@@ -75,5 +83,13 @@ public final class JWTUtils {
             log.error(e.getMessage(),e);
         }
         return payload;
+    }
+
+    public static String getUsername(String token) {
+        JWTPayload payload = parse(token);
+        if(ObjUtil.isNull(payload)) {
+            return null;
+        }
+        return  payload.getClaim(PAYLOAD).toString();
     }
 }

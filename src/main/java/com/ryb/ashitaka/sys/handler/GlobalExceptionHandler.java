@@ -1,4 +1,4 @@
-package com.ryb.ashitaka.common.handler;
+package com.ryb.ashitaka.sys.handler;
 
 
 import com.ryb.ashitaka.common.exception.ApiException;
