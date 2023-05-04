@@ -17,10 +17,10 @@ public class CodeGenerator {
 //        tables.add("p_answer");
 //        tables.add("p_correct");
 
-        FastAutoGenerator.create("jdbc:mysql://localhost:3306/ashitaka","root","1221")
+        FastAutoGenerator.create("jdbc:mysql://localhost:3306/ashitaka","root","root")
                 .globalConfig(builder -> {
                     builder.author("ryb")               //作者
-                            .outputDir("D:\\")    //输出路径(写到java目录)
+                            .outputDir("D:\\mybatis-plus\\generator")    //输出路径(写到java目录)
                             .enableSwagger()           //开启swagger
                             .commentDate("yyyy-MM-dd")
                             .fileOverride();            //开启覆盖之前生成的文件
@@ -35,7 +35,7 @@ public class CodeGenerator {
                             .controller("controller")
                             .mapper("mapper")
                             .xml("mapper")
-                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,"D:\\"));
+                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml,"D:\\mybatis-plus\\generator\\mapper"));
                 })
                 .strategyConfig(builder -> {
                     builder.addInclude(tables)

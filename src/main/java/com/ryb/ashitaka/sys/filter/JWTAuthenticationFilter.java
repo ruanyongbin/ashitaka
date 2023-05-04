@@ -21,7 +21,7 @@ import java.io.IOException;
 @Component
 public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
-    public static final String TOKEN_PREFIX = "Bearer ";
+
 
     public static final String HEADER_NAME = "Authorization";
 
@@ -34,8 +34,8 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
         String tokenWithPrefix = request.getHeader(HEADER_NAME);
         if(StrUtil.isNotBlank(tokenWithPrefix)) {
             // 从`JWT`中提取出之前存储好的用户名
-            String token = StrUtil.removePrefix(tokenWithPrefix, TOKEN_PREFIX);
-            String username = JWTUtils.getUsername(token);
+//            String token = StrUtil.removePrefix(tokenWithPrefix, JWTUtils.TOKEN_PREFIX);
+            String username = JWTUtils.getUsername(tokenWithPrefix);
             // 查询出用户对象
             UserDetails user = userServiceImpl.loadUserByUsername(username);
             // 手动组装一个认证对象

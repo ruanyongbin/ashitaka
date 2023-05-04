@@ -34,6 +34,8 @@ public final class JWTUtils {
 
     public static final JWTSigner JWT_SIGNER = JWTSignerUtil.hs256(SECRET_KEY.getBytes());
 
+    public static final String TOKEN_PREFIX = "Bearer ";
+
     /**
      * 生成JWT
      *
@@ -49,7 +51,7 @@ public final class JWTUtils {
         payload.put(JWTPayload.ISSUED_AT, issuedDate);
         payload.put(JWTPayload.EXPIRES_AT, expiryDate);
         payload.put(JWTPayload.ISSUER, ISSUER);
-        return JWTUtil.createToken(payload, JWT_SIGNER);
+        return StrUtil.addPrefixIfNot(JWTUtil.createToken(payload, JWT_SIGNER),TOKEN_PREFIX);
     }
 
 
@@ -85,7 +87,8 @@ public final class JWTUtils {
         return payload;
     }
 
-    public static String getUsername(String token) {
+    public static String getUsername(String tokenWithPrefix) {
+        String token = StrUtil.removePrefix(tokenWithPrefix, TOKEN_PREFIX);
         JWTPayload payload = parse(token);
         if(ObjUtil.isNull(payload)) {
             return null;

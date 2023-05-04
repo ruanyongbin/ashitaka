@@ -1,7 +1,9 @@
 package com.ryb.ashitaka.sys.aspect;
 
 import cn.hutool.json.JSONUtil;
+import com.ryb.ashitaka.common.util.IPUtils;
 import com.ryb.ashitaka.common.util.SecurityUtils;
+import com.ryb.ashitaka.common.util.ServletUtils;
 import com.ryb.ashitaka.sys.entity.SysLog;
 import com.ryb.ashitaka.sys.service.SysLogService;
 import lombok.extern.slf4j.Slf4j;
@@ -13,6 +15,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.lang.reflect.Method;
 import java.util.Arrays;
 
@@ -63,29 +66,22 @@ public class SysLogAspect {
 			sysLog.setModule(sysLogAnnotation.module());
 		}
 
-		//请求的方法名
-		String className = joinPoint.getTarget().getClass().getName();
-		String methodName = signature.getName();
-		sysLog.setMethod(className + "." + methodName + "()");
 
 		//请求的参数
 		Object[] args = joinPoint.getArgs();
-		try{
-			String params = Arrays.toString(args);
-			sysLog.setParam(params);
-		}catch (Exception e){
-			log.error(e.getMessage(),e);
-		}
+		String params = Arrays.toString(args);
+		sysLog.setParam(params);
 
 		sysLog.setOperator(SecurityUtils.getCurrentUsername());
 
 		sysLog.setResult(JSONUtil.toJsonStr(result));
 
-
 		//获取request
-//		HttpServletRequest request = HttpContextUtils.getHttpServletRequest();
+		HttpServletRequest request = ServletUtils.getRequest();
 		//设置IP地址
-		//sysLog.setIp(IPUtils.getIpAddr(request));
+		sysLog.setIp(IPUtils.getIpAddr(request));
+		sysLog.setRequestMethod(request.getMethod());
+		sysLog.setRequestUri(request.getRequestURI());
 
 		sysLog.setExecutionTime(executionTime);
 		//保存系统日志

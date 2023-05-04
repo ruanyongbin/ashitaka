@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.ryb.ashitaka.common.base.BaseEntity;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
@@ -16,7 +15,7 @@ import lombok.Setter;
  * </p>
  *
  * @author ryb
- * @since 2023-04-10
+ * @since 2023-05-04
  */
 @Getter
 @Setter
@@ -30,17 +29,13 @@ public class SysLog extends BaseEntity {
     @TableField("operator")
     private String operator;
 
-    @ApiModelProperty("执行时间（毫秒）")
+    @ApiModelProperty("执行所用时间（毫秒）")
     @TableField("execution_time")
     private Long executionTime;
 
-    @ApiModelProperty("方法名")
-    @TableField("method")
-    private String method;
-
-    @ApiModelProperty("请求类型")
-    @TableField("request_type")
-    private String requestType;
+    @ApiModelProperty("请求方法")
+    @TableField("request_method")
+    private String requestMethod;
 
     @ApiModelProperty("入参")
     @TableField("param")
@@ -50,14 +45,21 @@ public class SysLog extends BaseEntity {
     @TableField("result")
     private String result;
 
+    @ApiModelProperty("ip")
     @TableField("ip")
     private String ip;
 
+    @ApiModelProperty("描述")
     @TableField("description")
     private String description;
 
+    @ApiModelProperty("模块")
     @TableField("module")
     private String module;
+
+    @ApiModelProperty("uri")
+    @TableField("request_uri")
+    private String requestUri;
 
 
 }
