@@ -46,13 +46,13 @@ spring:
           username: root
           password: root
           url: jdbc:mysql://localhost:3306/ashitaka
-#        ds2:
-#          driver-class-name: com.mysql.cj.jdbc.Driver
-#          username: root
-#          password: root
-#          url: jdbc:mysql://localhost:3306/ashitaka1
-#          druid: # 以下参数针对每个库可以重新设置druid参数
-#            validation-query: SELECT '2' #比如oracle就需要重新设置这个
+        ds2:
+          url: jdbc:oracle:thin:@172.20.103.115:1521/zoemdb
+          username: zoezeis
+          password: zoe$2017zeiscnt
+          driver-class-name: oracle.jdbc.OracleDriver
+          druid: # 以下参数针对每个库可以重新设置druid参数
+            validation-query: SELECT '2' from dual #比如oracle就需要重新设置这个
 mybatis-plus:
   global-config:
     db-config:
@@ -66,3 +66,5 @@ executor:
     queue-capacity: 100 # 队列长度
     keep-alive-seconds: 60 # 存活时间
     prefix-name: "taskExecutor-" # 线程名称前缀
+pagehelper:
+  auto-runtime-dialect: true

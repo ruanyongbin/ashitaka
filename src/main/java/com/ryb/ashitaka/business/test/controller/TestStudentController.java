@@ -1,5 +1,6 @@
 package com.ryb.ashitaka.business.test.controller;
 
+import com.github.pagehelper.PageHelper;
 import com.ryb.ashitaka.business.test.dto.TestStudentSaveDTO;
 import com.ryb.ashitaka.business.test.entity.TestStudent;
 import com.ryb.ashitaka.business.test.service.TestStudentService;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("test/student")
@@ -34,6 +36,13 @@ public class TestStudentController {
         testStudent.setName(testStudentSaveDTO.getName());
         testStudent.setAge(testStudentSaveDTO.getAge());
         return ResultUtils.success(testStudentService.save(testStudent));
+    }
+
+    @PostMapping("list")
+    @ApiOperation("学生列表")
+    public Result<List<TestStudent>> save() {
+        PageHelper.startPage(1, 1);
+      return ResultUtils.success(testStudentService.list());
     }
 
 }
